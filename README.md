@@ -9,7 +9,6 @@ Inserendo il nome di una città, l’app mostra il meteo attuale (temperatura, u
 
 Il progetto è realizzato utilizzando **HTML**, **CSS** e **JavaScript**.  
 Il browser invia richieste alle API di OpenWeather, riceve i dati in formato JSON e li elabora per mostrarli in modo chiaro e organizzato all’utente.
-Grazie a questo sistema di richieste api, riusciamo ad ottimizzare la nostra web app fornendo un servizio chiaro e completo agli utenti
 
 ---
 
@@ -25,16 +24,14 @@ Grazie a questo sistema di richieste api, riusciamo ad ottimizzare la nostra web
 
 Ogni componente ha avuto un ruolo preciso.
 
-**Project Manager — coordinamento e organizzazione**  
+**Project Manager, API Specialist (UMAR IQBAL) — coordinamento e organizzazione / logica e integrazione dati**  
 Si è occupato di pianificare il lavoro, assegnare compiti, controllare le scadenze e comunicare con il docente.
-
-**Frontend Developer — interfaccia e grafica**  
-Ha curato layout, colori, struttura della pagina e usabilità del sito.
-
-**API / Data Specialist — logica e integrazione dati**  
 Ha gestito le chiamate alle API, la lettura dei JSON e la preparazione dei dati per il frontend.
 
-**Tester / Documentazione — controllo qualità e scrittura documenti**  
+**Frontend Developer (MEDICI LEONARDO / MIOLA LORENZO) — interfaccia e grafica**  
+Hanno curato layout, colori, struttura della pagina e usabilità del sito.
+
+**Tester / Documentazione (ANDREA IVAN LOCATELLI) — controllo qualità e scrittura documenti**  
 Ha testato il sito, trovato eventuali errori e scritto la documentazione finale.
 
 
