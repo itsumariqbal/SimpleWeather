@@ -1,4 +1,4 @@
-/* SIMPLE WEATHER — OPENWEATHER (FREE, STABILE) */
+/* SIMPLE WEATHER — OPENWEATHER (VERSIONE MIGLIORATA) */
 
 const API_KEY = "219c20aad794980966e8cf5dd06566ec";
 
@@ -16,6 +16,7 @@ const weatherIconEl = document.getElementById("weatherIcon");
 
 let forecastList = [];
 
+/* ---------------- EVENTI ---------------- */
 searchBtn.addEventListener("click", () => {
   const city = cityInput.value.trim();
   if (!city) return showError("Inserisci una città.");
@@ -24,18 +25,34 @@ searchBtn.addEventListener("click", () => {
 
 cityInput.addEventListener("keyup", e => e.key === "Enter" && searchBtn.click());
 
+/* ---------------- UTILITIES ---------------- */
+function showError(msg) {
+  errorMessage.textContent = msg;
+}
+
+function clearError() {
+  errorMessage.textContent = "";
+}
+
+function setLoading(on) {
+  errorMessage.textContent = on ? "Caricamento..." : "";
+}
+
+function msToKmh(v) {
+  return Math.round(v * 3.6);
+}
+
 /* ---------------- CARICA TUTTO ---------------- */
 async function loadData(city) {
   clearError();
+  setLoading(true);
   weatherCard.classList.add("hidden");
 
   try {
-    // meteo attuale
     const curUrl = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
       city
     )}&appid=${API_KEY}&units=metric&lang=it`;
 
-    // previsioni 5 giorni (ogni 3 ore)
     const foreUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(
       city
     )}&appid=${API_KEY}&units=metric&lang=it`;
@@ -45,8 +62,15 @@ async function loadData(city) {
       fetch(foreUrl)
     ]);
 
-    if (!curRes.ok) throw new Error("Errore meteo attuale");
-    if (!foreRes.ok) throw new Error("Errore previsioni");
+    if (!curRes.ok) {
+      const err = await curRes.json();
+      throw new Error(err.message || "Errore meteo attuale");
+    }
+
+    if (!foreRes.ok) {
+      const err = await foreRes.json();
+      throw new Error(err.message || "Errore previsioni");
+    }
 
     const current = await curRes.json();
     const forecast = await foreRes.json();
@@ -54,10 +78,11 @@ async function loadData(city) {
     forecastList = forecast.list;
 
     renderCurrent(current);
-    renderDaily(forecast);
+    renderDaily();
   } catch (err) {
-    console.error(err);
-    showError("Errore nel recupero dei dati meteo.");
+    showError(err.message || "Errore nel recupero dei dati meteo.");
+  } finally {
+    setLoading(false);
   }
 }
 
@@ -67,14 +92,14 @@ function renderCurrent(cur) {
   descriptionEl.textContent = cur.weather[0].description;
   temperatureEl.textContent = `${Math.round(cur.main.temp)}°C`;
   humidityEl.textContent = `${cur.main.humidity}%`;
-  windEl.textContent = `${cur.wind.speed} m/s`;
+  windEl.textContent = `${msToKmh(cur.wind.speed)} km/h`;
 
   weatherIconEl.src = `https://openweathermap.org/img/wn/${cur.weather[0].icon}@2x.png`;
   weatherIconEl.alt = cur.weather[0].description;
 }
 
 /* ---------------- PREVISIONI (CARDS) ---------------- */
-function renderDaily(forecast) {
+function renderDaily() {
   const oldForecast = document.getElementById("forecastContainer");
   if (oldForecast) oldForecast.remove();
 
@@ -84,7 +109,6 @@ function renderDaily(forecast) {
   const container = document.createElement("div");
   container.id = "forecastContainer";
 
-  // raggruppiamo per giorno
   const days = {};
 
   forecastList.forEach(item => {
@@ -95,7 +119,7 @@ function renderDaily(forecast) {
     days[key].push(item);
   });
 
-  const dates = Object.keys(days).slice(1, 6); // prossimi 5 giorni
+  const dates = Object.keys(days).slice(1, 6);
 
   dates.forEach(dateStr => {
     const dayItems = days[dateStr];
@@ -163,7 +187,7 @@ function showHourly(items) {
       <td style="padding:6px 8px">${t.getHours()}:00</td>
       <td style="padding:6px 8px">${Math.round(h.main.temp)}°C</td>
       <td style="padding:6px 8px">${h.weather[0].description}</td>
-      <td style="padding:6px 8px">${h.wind.speed} m/s</td>
+      <td style="padding:6px 8px">${msToKmh(h.wind.speed)} km/h</td>
     `;
 
     tbody.appendChild(row);
@@ -171,7 +195,3 @@ function showHourly(items) {
 
   weatherCard.appendChild(table);
 }
-
-/* ---------------- UTILITY ---------------- */
-function showError(msg){ errorMessage.textContent = msg; }
-function clearError(){ errorMessage.textContent = ""; }
