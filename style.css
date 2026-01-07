@@ -2,18 +2,21 @@
   box-sizing: border-box;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
 }
-/* Background gradient inspired by https://uigradients.com/#LightBlue */
+
+/* Sfondo */
 body {
   margin: 0;
   background: linear-gradient(145deg, #9ad0ff, #b9b0ff);
 }
 
+/* Contenitore principale */
 .container {
   max-width: 900px;
   margin: 40px auto;
   padding: 20px;
 }
 
+/* App box */
 .app-box {
   background: #f9fafb;
   border-radius: 18px;
@@ -21,6 +24,7 @@ body {
   box-shadow: 0 18px 40px rgba(0,0,0,.12);
 }
 
+/* Header */
 header h1 {
   margin: 0 0 6px 0;
 }
@@ -30,6 +34,7 @@ header p {
   margin-bottom: 18px;
 }
 
+/* Ricerca */
 .search-row {
   display: flex;
   gap: 8px;
@@ -48,17 +53,19 @@ header p {
   padding: 10px 16px;
   border: none;
   border-radius: 10px;
-  background:#2563eb;
+  background: #2563eb;
   color: white;
   font-weight: 600;
   cursor: pointer;
 }
 
+/* Errori */
 #errorMessage {
   color: #d42828;
   min-height: 16px;
 }
 
+/* Card meteo */
 .weather-card {
   background: #ffffff;
   border-radius: 14px;
@@ -66,27 +73,30 @@ header p {
   margin-top: 12px;
 }
 
-.current {
+/* TEMPO ATTUALE */
+.tempo-attuale {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 8px;
   align-items: center;
 }
 
-.current h2 {
+.tempo-attuale h2 {
   margin: 0;
 }
 
-.current .temp {
+.tempo-attuale .temperatura {
   font-size: 2.6rem;
   font-weight: 700;
 }
 
-.details small {
+/* Dettagli */
+.dettagli small {
   display: block;
-  color:#444;
+  color: #444;
 }
 
+/* Previsioni */
 #forecastContainer {
   margin-top: 18px;
   display: grid;
@@ -95,11 +105,14 @@ header p {
 }
 
 .forecast-card {
-  background:white;
-  border-radius:12px;
-  padding:10px 8px;
-  box-shadow:0 10px 24px rgba(0,0,0,.09);
-  text-align:center;
+  background: white;
+  border-radius: 12px;
+  padding: 10px 8px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.09);
+  text-align: center;
 }
 
-.hidden { display:none; }
+/* Utility */
+.hidden {
+  display: none;
+}
