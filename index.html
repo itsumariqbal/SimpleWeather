@@ -13,18 +13,19 @@
             <p class="subtitle">Inserisci una città per vedere il meteo</p>
         </header>
 
-        <section class="search-box">
+        <form class="search-box" id="weatherForm">
             <label for="cityInput" class="visually-hidden">Nome città</label>
             <input 
-                type="text" 
+                type="text"
                 id="cityInput"
                 placeholder="Es. Bergamo, Roma, Milano"
                 autocomplete="off"
                 required>
-            <button id="searchBtn" class="btn-primary">
+
+            <button type="submit" id="searchBtn" class="btn-primary">
                 Cerca
             </button>
-        </section>
+        </form>
 
         <div id="errorMessage" class="error-message" aria-live="polite"></div>
 
