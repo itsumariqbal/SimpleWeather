@@ -1,6 +1,6 @@
 /* SIMPLE WEATHER — OPENWEATHER (FREE, STABILE) */
 
-const API_KEY = "219c20aad794980966e8cf5dd06566ec";
+import { API_KEY } from './config.js';
 
 const cityInput = document.getElementById("cityInput");
 const searchBtn = document.getElementById("searchBtn");
