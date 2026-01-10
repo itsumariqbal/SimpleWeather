@@ -32,6 +32,21 @@ jobs:
         # If you use a build system, replace the above with your build commands, e.g.:
         # run: npm ci; npm run build
 
+      - name: Diagnostic: verify config.js
+        run: |
+          echo "-- current directory --"
+          ls -la
+          echo "-- config.js info --"
+          if [ -f config.js ]; then
+            echo "config.js exists"
+            echo "size:" $(wc -c < config.js) "bytes"
+            echo "first line (secret will be masked in logs):"
+            head -n 1 config.js
+          else
+            echo "config.js NOT FOUND"
+            exit 1
+          fi
+
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
