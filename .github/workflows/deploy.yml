@@ -22,9 +22,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create config.js from secret
+      - name: Create config.js from API_KEY
         run: |
-          echo "export const API_KEY = '${{ secrets.MY_API_KEY }}';" > config.js
+          echo "export const API_KEY = '${{ API_KEY.MY_API_KEY }}';" > config.js
 
       - name: (Optional) Build step
         run: |
