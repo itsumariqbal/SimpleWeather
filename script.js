@@ -1,17 +1,9 @@
-/* SIMPLE WEATHER — OPENWEATHER (FREE, STABILE) */
+/* SIMPLE WEATHER — FRONTEND (NO API KEY) */
 
-import { API_KEY } from './config.js';
+/* ================= CONFIG ================= */
+const API_BASE_URL = "https://simpleweather-api.vercel.app/api";
 
-// Diagnostic helpful message: if the API key is missing the app will not work.
-// This block disables the search UI and shows a clear message so you can
-// quickly see on the deployed site whether the workflow actually injected
-// `config.js` with a valid key.
-if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
-  showError("API key mancante o non valida. Verifica la configurazione.");
-  searchBtn.disabled = true;
-  console.error('API key missing - check config.js or repository secret MY_API_KEY');
-}
-
+/* ================= DOM ================= */
 const cityInput = document.getElementById("cityInput");
 const searchBtn = document.getElementById("searchBtn");
 const errorMessage = document.getElementById("errorMessage");
@@ -23,18 +15,13 @@ const humidityEl = document.getElementById("humidity");
 const windEl = document.getElementById("wind");
 const weatherIconEl = document.getElementById("weatherIcon");
 
-let forecastList = []; 
-let debounceTimer;
+let forecastList = [];
 
-// Event Listeners
+/* ================= EVENTS ================= */
 searchBtn.addEventListener("click", handleSearch);
-cityInput.addEventListener("keyup", (e) => {
-  if (e.key === "Enter") {
-    handleSearch();
-  }
-});
+cityInput.addEventListener("keyup", e => e.key === "Enter" && handleSearch());
 
-/* ---------------- HANDLERS ---------------- */
+/* ================= HANDLERS ================= */
 function handleSearch() {
   const city = cityInput.value.trim();
   if (!city) {
@@ -43,6 +30,7 @@ function handleSearch() {
   }
   loadData(city);
 }
+
 function setLoadingState(isLoading) {
   searchBtn.disabled = isLoading;
   searchBtn.textContent = isLoading ? "Caricamento..." : "Cerca";
@@ -50,16 +38,15 @@ function setLoadingState(isLoading) {
     weatherCard.classList.add("hidden");
   }
 }
-cityInput.addEventListener("keyup", e => e.key === "Enter" && searchBtn.click());
 
-/* ---------------- CARICA TUTTO ---------------- */
+/* ================= LOAD DATA ================= */
 async function loadData(city) {
   clearError();
-  weatherCard.classList.add("hidden");
+  setLoadingState(true);
 
-try {
-    const currentUrl = `${API_BASE_URL}/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric&lang=it`;
-    const forecastUrl = `${API_BASE_URL}/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric&lang=it`;
+  try {
+    const currentUrl = `${API_BASE_URL}/weather?city=${encodeURIComponent(city)}`;
+    const forecastUrl = `${API_BASE_URL}/forecast?city=${encodeURIComponent(city)}`;
 
     const [currentRes, forecastRes] = await Promise.all([
       fetch(currentUrl),
@@ -67,7 +54,7 @@ try {
     ]);
 
     if (!currentRes.ok) {
-      throw new Error(currentRes.status === 404 ? "Città non trovata" : "Errore nel recupero dei dati meteo");
+      throw new Error(currentRes.status === 404 ? "Città non trovata" : "Errore nel recupero del meteo");
     }
     if (!forecastRes.ok) {
       throw new Error("Errore nel recupero delle previsioni");
@@ -79,7 +66,7 @@ try {
     forecastList = forecast.list;
 
     renderCurrent(current);
-    renderDaily(forecast);
+    renderDaily();
   } catch (err) {
     console.error("Errore caricamento dati:", err);
     showError(err.message || "Errore nel recupero dei dati meteo.");
@@ -88,7 +75,7 @@ try {
   }
 }
 
-/* ---------------- METEO ATTUALE ---------------- */
+/* ================= CURRENT WEATHER ================= */
 function renderCurrent(cur) {
   cityNameEl.textContent = `${cur.name}, ${cur.sys.country}`;
   descriptionEl.textContent = cur.weather[0].description;
@@ -100,37 +87,30 @@ function renderCurrent(cur) {
   weatherIconEl.alt = cur.weather[0].description;
 }
 
-/* ---------------- PREVISIONI (CARDS) ---------------- */
-function renderDaily(forecast) {
-  const oldForecast = document.getElementById("forecastContainer");
-  if (oldForecast) oldForecast.remove();
-
-  const oldTable = document.getElementById("hourlyTable");
-  if (oldTable) oldTable.remove();
+/* ================= DAILY FORECAST ================= */
+function renderDaily() {
+  document.getElementById("forecastContainer")?.remove();
+  document.getElementById("hourlyTable")?.remove();
 
   const container = document.createElement("div");
   container.id = "forecastContainer";
 
-  // raggruppiamo per giorno
   const days = {};
 
   forecastList.forEach(item => {
     const d = new Date(item.dt * 1000);
     const key = d.toISOString().split("T")[0];
-
     if (!days[key]) days[key] = [];
     days[key].push(item);
   });
 
-  const dates = Object.keys(days).slice(1, 6); // prossimi 5 giorni
+  const dates = Object.keys(days).slice(1, 6);
 
   dates.forEach(dateStr => {
     const dayItems = days[dateStr];
-
     const temps = dayItems.map(x => x.main.temp);
     const min = Math.round(Math.min(...temps));
     const max = Math.round(Math.max(...temps));
-
     const middle = dayItems[Math.floor(dayItems.length / 2)];
 
     const d = new Date(dateStr);
@@ -148,7 +128,6 @@ function renderDaily(forecast) {
     `;
 
     card.addEventListener("click", () => showHourly(dayItems));
-
     container.appendChild(card);
   });
 
@@ -156,10 +135,9 @@ function renderDaily(forecast) {
   weatherCard.classList.remove("hidden");
 }
 
-/* ---------------- TABELLA ORARIA ---------------- */
+/* ================= HOURLY TABLE ================= */
 function showHourly(items) {
-  const old = document.getElementById("hourlyTable");
-  if (old) old.remove();
+  document.getElementById("hourlyTable")?.remove();
 
   const table = document.createElement("table");
   table.id = "hourlyTable";
@@ -184,7 +162,6 @@ function showHourly(items) {
 
   items.forEach(h => {
     const t = new Date(h.dt * 1000);
-
     const row = document.createElement("tr");
     row.innerHTML = `
       <td style="padding:6px 8px">${t.getHours()}:00</td>
@@ -192,14 +169,16 @@ function showHourly(items) {
       <td style="padding:6px 8px">${h.weather[0].description}</td>
       <td style="padding:6px 8px">${h.wind.speed} m/s</td>
     `;
-
     tbody.appendChild(row);
   });
 
   weatherCard.appendChild(table);
 }
 
-/* ---------------- UTILITY ---------------- */
-function showError(msg){ errorMessage.textContent = msg; }
-function clearError(){ errorMessage.textContent = ""; }
-
+/* ================= UTILS ================= */
+function showError(msg) {
+  errorMessage.textContent = msg;
+}
+function clearError() {
+  errorMessage.textContent = "";
+}
