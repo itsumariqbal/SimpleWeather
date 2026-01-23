@@ -63,8 +63,10 @@ SimpleWeather può essere ampliato in futuro con nuove funzioni come grafici, te
 
 Per usare SimpleWeather non servono installazioni particolari.
 
-1. Apri il file `index.html` nel browser.
+1. Apri il file `index.html` nel browser oppure visita direttamente il
+   seguente link: https://simpleweather-tps.github.io/SimpleWeather/
 2. Scrivi nel campo di ricerca il nome della città (es. “Milano” o “Roma”).
+   (il sistema consiglierà in automatico alcune città in base alle prime lettere digitate dall'utente nella barra di ricerca)
 3. Premi invio o il pulsante di ricerca.
 4. Verrà mostrato:
    - il meteo attuale
@@ -74,37 +76,3 @@ Per usare SimpleWeather non servono installazioni particolari.
    - descrizione meteo
    - velocità del vento
 
-
-```js
-const API_KEY = "LA_TUA_API_KEY";
-
-
----
-
-## Configurazione locale con variabili d'ambiente
-
-Per evitare di committare la key nel repository, ora `config.js` viene generato a runtime leggendo la variabile `MY_API_KEY`.
-
-### Passi
-1. Installa le dipendenze: `npm ci`
-2. Crea un file `.env.local` copiando `.env.local.example` e inserisci la tua chiave:
-    ```bash
-    MY_API_KEY=LA_TUA_API_KEY
-    ```
-3. Genera `config.js`: `npm run generate:config`
-4. Avvia un server statico di sviluppo: `npm run dev` (usa `serve` sulla porta 4173)
-
-`config.js` è git-ignorato per evitare di committare la chiave; se non esiste, lo script in `script.js` blocca l'interfaccia e mostra un messaggio d'errore.
-
----
-
-## Deploy su GitHub Pages (con secret `MY_API_KEY`)
-
-Il workflow GitHub Actions (`.github/workflows/deploy.yml`):
-- legge il secret `MY_API_KEY` configurato nella repo
-- esegue `npm ci` e `npm run generate:config` per creare `config.js` con la key
-- pubblica i file statici su GitHub Pages
-
-Trigger: push su `main` o esecuzione manuale (`workflow_dispatch`).
-
-> Nota: trattandosi di un'app client-side, la key sarà presente nel JS pubblicato. Per chiavi sensibili servirebbe un backend/proxy, non GitHub Pages.
