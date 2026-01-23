@@ -1,80 +1,124 @@
-# SimpleWeather
+# SimpleWeather - Realistic Weather Application
 
-SimpleWeather è una web-app sviluppata come progetto scolastico che permette di consultare il meteo di una città e le previsioni dei giorni successivi utilizzando i dati forniti dalle API di OpenWeather. Il progetto ha come obiettivo principale quello di imparare a lavorare con le API, interpretare dati JSON e trasformarli in un’interfaccia semplice, chiara e pensata soprattutto per l’uso da desktop.
+Applicazione meteorologica moderna con sfondi fotografici dinamici e animazioni CSS avanzate.
 
-Inserendo il nome di una città, l’app mostra il meteo attuale (temperatura, umidità, vento e descrizione del tempo) e una sezione con le previsioni. Cliccando su uno dei giorni è possibile aprire una vista dettagliata ora per ora, utile per capire meglio l’andamento della giornata.
+## Caratteristiche Principali
 
----
-## Come è stato sviluppato
+- **Ricerca intelligente** - Ricerca per qualsiasi città italiana
+- **Meteo in tempo reale** - Temperatura, umidità, velocità del vento
+- **Previsioni a 5 giorni** - Con dettaglio orario
+- **Sfondi dinamici** - Fotografie realistiche che si adattano alle condizioni meteo
+- **Animazioni meteorologiche**
+  - Effetto luce solare
+  - Pioggia animata
+  - Neve in caduta
+  - Lampi durante temporali
+  - Movimento delle nuvole
+- **Responsive Design** - Compatibile con mobile, tablet e desktop
+- **Localizzazione italiana** - Descrizioni meteorologiche in lingua italiana
 
-Il progetto è realizzato utilizzando **HTML**, **CSS** e **JavaScript**.  
-Il browser invia richieste alle API di OpenWeather, riceve i dati in formato JSON e li elabora per mostrarli in modo chiaro e organizzato all’utente.
+## Demo
 
----
+**Live Demo**: [https://github.com/SimpleWeather-TPS/SimpleWeather](https://github.com/SimpleWeather-TPS/SimpleWeather)
 
-### Struttura del progetto
+## Stack Tecnologico
 
-- **index.html** → interfaccia del sito  
-- **style.css** → stile grafico e layout  
-- **script.js** → logica, chiamate API e gestione dei dati
+| Tecnologia | Utilizzo |
+|------------|----------|
+| **HTML5** | Struttura semantica dell'applicazione |
+| **CSS3** | Styling e sistema di animazioni |
+| **JavaScript ES6+** | Logica applicativa e gestione dati |
+| **OpenWeatherMap API** | Servizio dati meteorologici |
+| **Unsplash** | CDN per immagini di background |
 
----
+## Installazione
 
-## Ruoli del gruppo (4 membri)
+### Metodo 1: Download Diretto
 
-Ogni componente ha avuto un ruolo preciso.
+```bash
+# Clonare il repository
+git clone https://github.com/SimpleWeather-TPS/SimpleWeather.git
 
-**Project Manager, API Specialist (UMAR IQBAL) — coordinamento e organizzazione / logica e integrazione dati**  
-Si è occupato di pianificare il lavoro, assegnare compiti, controllare le scadenze e comunicare con il docente.
-Ha gestito le chiamate alle API, la lettura dei JSON e la preparazione dei dati per il frontend.
+# Aprire index.html nel browser
+cd simple-weather
+open index.html
+```
 
-**Frontend Developer (MEDICI LEONARDO / MIOLA LORENZO) — interfaccia e grafica**  
-Hanno curato layout, colori, struttura della pagina e usabilità del sito.
+### Metodo 2: Deploy con GitHub Pages
 
-**Tester / Documentazione (ANDREA IVAN LOCATELLI) — controllo qualità e scrittura documenti**  
-Ha testato il sito, trovato eventuali errori e scritto la documentazione finale.
+1. Effettuare il fork del repository
+2. Accedere a **Settings** → **Pages**
+3. Selezionare branch `main` e directory `/root`
+4. Salvare e attendere il completamento del deploy
+5. Accedere a https://github.com/SimpleWeather-TPS/SimpleWeather.git
 
+## Configurazione API Key
 
+1. Registrarsi gratuitamente su [OpenWeatherMap](https://openweathermap.org/api)
+2. Ottenere la propria API key
+3. Sostituire la chiave nel file `script.js`:
 
----
+```javascript
+const API_KEY = "TUA_CHIAVE_API_QUI";
+```
 
-## Piattaforme e risorse utilizzate
+**Nota**: La chiave fornita nel codice è a scopo dimostrativo. Per l'utilizzo in produzione è necessario utilizzare una chiave personale.
 
-- **OpenWeather API** – servizio di dati meteo  
-  https://openweathermap.org/
-- **Icons8 e icone OpenWeather** – icone grafiche
-- **Visual Studio Code** – editor di codice
-- **GitHub** – gestione e condivisione del progetto
-- **Documentazione OpenWeather** – consultata per parametri ed endpoint
+## Guida all'Utilizzo
 
-Tutto il codice è pensato a scopo **didattico** e non commerciale.
+### Ricerca Base
 
----
+1. Inserire il nome di una città (es. "Milano")
+2. Premere INVIO oppure cliccare su "Cerca"
+3. Visualizzare meteo corrente e previsioni
 
-## Crediti
+### Navigazione Previsioni
 
-- Dati meteo: **OpenWeather**  
-- Icone: **OpenWeather** e **Icons8**  
-- Sviluppo: gruppo di 4 studenti (TPS – progetto scolastico)
+1. Selezionare una card giornaliera
+2. Consultare i dettagli orari nella tabella sottostante
+3. Lo sfondo si adatta automaticamente alle condizioni meteo selezionate
 
-SimpleWeather può essere ampliato in futuro con nuove funzioni come grafici, tema scuro, salvataggio delle città preferite e versione mobile.
+## Struttura del Progetto
 
-## Come utilizzare il sito
+```
+simple-weather/
+│
+├── index.html          # Struttura HTML principale
+├── style.css           # Fogli di stile e animazioni CSS
+├── script.js           # Logica applicativa JavaScript
+│
+├── docs/               # Documentazione di progetto
+│   ├── design.md
+│   ├── development.md
+│   └── user-guide.md
+│
+└── README.md           # Documentazione principale
+```
 
-Per usare SimpleWeather non servono installazioni particolari.
+## Condizioni Meteorologiche Supportate
 
-1. Apri il file `index.html` nel browser.
-2. Scrivi nel campo di ricerca il nome della città (es. “Milano” o “Roma”).
-3. Premi invio o il pulsante di ricerca.
-4. Verrà mostrato:
-   - il meteo attuale
-   - le previsioni di più giorni
-5. Cliccando su uno dei giorni nelle previsioni si apre una tabella con:
-   - temperatura ora per ora
-   - descrizione meteo
-   - velocità del vento
+| Condizione | Sfondo | Animazione |
+|------------|--------|------------|
+| Sereno | Cielo azzurro | Effetto luce solare pulsante |
+| Nuvoloso | Nuvole grigie | Movimento orizzontale delle nuvole |
+| Pioggia | Paesaggio piovoso | Gocce animate in caduta |
+| Neve | Paesaggio innevato | Fiocchi di neve in movimento |
+| Temporale | Cielo tempestoso | Lampi intermittenti e pioggia |
 
-Per far funzionare correttamente le richieste, nel file `script.js` è necessario inserire la propria API key di OpenWeather dentro:
+## Testing e Compatibilità
 
-```js
-const API_KEY = "LA_TUA_API_KEY";
+L'applicazione è stata testata e verificata sui seguenti browser:
+
+- Chrome 120+
+- Firefox 121+
+- Safari 17+
+- Edge 120+
+
+## Roadmap Futura
+
+- Implementazione grafici andamento temperatura settimanale
+- Aggiunta geolocalizzazione automatica
+- Sistema di salvataggio città preferite (localStorage)
+- Implementazione modalità tema scuro/chiaro manuale
+- Sistema di widget meteorologici personalizzabili
+- Supporto Progressive Web App (modalità offline)
