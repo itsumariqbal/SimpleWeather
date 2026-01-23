@@ -1,6 +1,6 @@
 /* SIMPLE WEATHER — REALISTICO */
 
-const API_KEY = "219c20aad794980966e8cf5dd06566ec";
+const API_KEY = window.API_KEY;
 
 const cityInput = document.getElementById("cityInput");
 const searchBtn = document.getElementById("searchBtn");
@@ -247,4 +247,5 @@ function clearError() {
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
 
