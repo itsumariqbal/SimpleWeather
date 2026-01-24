@@ -18,10 +18,8 @@
 |ID    |Requisito    |Metrica           |Target                       |
 |------|-------------|------------------|-----------------------------|
 |RNF-01|Performance  |Tempo caricamento |< 2s                         |
-|RNF-02|Usabilità    |Clicks per ricerca|≤ 2                          |
-|RNF-03|Responsive   |Breakpoint mobile |600px                        |
-|RNF-04|Accessibilità|Contrasto colori  |WCAG AA                      |
-|RNF-05|Compatibilità|Browser supportati|Chrome, Firefox, Safari, Edge|
+|RNF-02|Accessibilità|Contrasto colori  |-                            |
+|RNF-03|Compatibilità|Browser supportati|Chrome, Edge                 |
 
 ## 1.2 Architettura del Sistema
 
